@@ -16,16 +16,22 @@ before_script:
 
 build:
   stage: build
+  tags:
+    - build
   script:
     - echo "Build stage for ${CI_COMMIT_REF_NAME}-${CI_COMMIT_SHORT_SHA}"
 
 test:
   stage: test
+  tags:
+    - build
   script:
     - ./vendor/bin/phpunit tests
 
 publish-to-gitlab:
   stage: publish-to-gitlab
+  tags:
+    - build
   only:
     - branches
   script:
@@ -36,6 +42,8 @@ publish-to-gitlab:
 
 publish-to-packagist:
   stage: publish-to-packagist
+  tags:
+    - build
   only:
     - tags
   script:
