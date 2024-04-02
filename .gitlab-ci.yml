@@ -16,4 +16,4 @@ publish-to-packagist:
     - tags
   script:
     - echo "Publishing ${CI_COMMIT_TAG} to Packagist..."
-    - 'curl -X POST -H "Authorization: token ${PACKAGIST_API_TOKEN}" "https://packagist.org/api/update-package?username=YOUR_PACKAGIST_USERNAME&apiToken=${PACKAGIST_API_TOKEN}" -d "{\"repository\":{\"url\":\"${CI_PROJECT_URL}\"}}"'
+    - 'curl -X POST -H "Authorization: Bearer ${PACKAGIST_API_TOKEN}" "https://packagist.org/api/update-package?username=YOUR_PACKAGIST_USERNAME" -d "{\"repository\":{\"url\":\"${CI_PROJECT_URL}\"}}"'
