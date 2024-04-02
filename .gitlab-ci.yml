@@ -1,7 +1,8 @@
 image: php:7.4
 
 stages:
-  - publish
+  - publish-to-gitlab
+  - publish-to-packagist
 
 variables:
   COMPOSER_CACHE_DIR: "$CI_PROJECT_DIR/.composer"
@@ -12,7 +13,7 @@ before_script:
   - composer install --prefer-dist --no-ansi --no-interaction --no-progress
 
 publish-to-gitlab:
-  stage: publish
+  stage: publish-to-gitlab
   tags:
     - build
   only:
