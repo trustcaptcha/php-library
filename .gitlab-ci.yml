@@ -1,37 +1,19 @@
 image: php:7.4
 
 stages:
-  - publish-to-gitlab
-  - publish-to-packagist
-
-variables:
-  COMPOSER_CACHE_DIR: "$CI_PROJECT_DIR/.composer"
+  - publish
 
 before_script:
   - apt-get update -qq && apt-get install -y -qq unzip git
   - curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
   - composer install --prefer-dist --no-ansi --no-interaction --no-progress
 
-publish-to-gitlab:
-  stage: publish-to-gitlab
-  tags:
-    - build
-  only:
-    - branches
-  script:
-    - echo "Publishing development version to GitLab Package Registry"
-    - composer config version ${CI_COMMIT_REF_NAME}-${CI_COMMIT_SHORT_SHA}
-    - composer config repositories.gitlab composer ${CI_SERVER_URL}/${CI_PROJECT_PATH}
-    - composer publish --repository=gitlab --username=${CI_JOB_TOKEN} --password=""
-
 publish-to-packagist:
-  stage: publish-to-packagist
+  stage: publish
   tags:
     - build
   only:
     - tags
   script:
-    - echo "Publishing release version $CI_COMMIT_TAG to Packagist"
-    - composer config version $CI_COMMIT_TAG
-    # Stellen Sie sicher, dass Ihr Packagist-Token sicher als CI/CD-Variable gespeichert ist
-    # curl -X POST -H "Content-Type: application/json" -d '{"version": "$CI_COMMIT_TAG"}' https://api.packagist.org/packages/submit?username=$PACKAGIST_USERNAME&apiToken=$PACKAGIST_API_TOKEN
+    - echo "Publishing ${CI_COMMIT_TAG} to Packagist..."
+    - 'curl -X POST -H "Authorization: token ${PACKAGIST_API_TOKEN}" "https://packagist.org/api/update-package?username=YOUR_PACKAGIST_USERNAME&apiToken=${PACKAGIST_API_TOKEN}" -d "{\"repository\":{\"url\":\"${CI_PROJECT_URL}\"}}"'
