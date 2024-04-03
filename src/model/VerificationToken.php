@@ -1,5 +1,7 @@
 <?php
 
+namespace Trustcaptcha;
+
 class VerificationToken {
     public $apiEndpoint;
     public $verificationId;

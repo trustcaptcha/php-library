@@ -1,5 +1,7 @@
 <?php
 
+namespace Trustcaptcha;
+
 class VerificationResult {
     public $captchaId;
     public $verificationId;

@@ -1,5 +1,9 @@
 <?php
 
+namespace Trustcaptcha;
+
+use Exception;
+
 require_once 'model/VerificationToken.php';
 require_once 'model/VerificationResult.php';
 require_once 'AesEncryption.php';
