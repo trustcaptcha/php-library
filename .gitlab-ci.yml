@@ -1,19 +1,12 @@
-image: php:7.4
-
 stages:
-  - publish
+  - mirror
 
-before_script:
-  - apt-get update -qq && apt-get install -y -qq unzip git
-  - curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
-  - composer install --prefer-dist --no-ansi --no-interaction --no-progress
-
-publish-to-packagist:
-  stage: publish
-  tags:
-    - build
+mirror_to_github:
+  stage: mirror
+  script:
+    - git remote add github https://trustcaptcha:${GITHUB_ACCESS_TOKEN}@github.com/trustcaptcha/php-library.git
+    - git push --mirror github
   only:
     - tags
-  script:
-    - echo "Publishing ${CI_COMMIT_TAG} to Packagist..."
-    - 'curl -X POST -H "Authorization: Bearer ${PACKAGIST_API_TOKEN}" "https://packagist.org/api/update-package?username=trustcaptcha" -d "{\"repository\":{\"url\":\"${CI_PROJECT_URL}\"}}"'
+  tags:
+    - build
