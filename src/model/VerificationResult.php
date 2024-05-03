@@ -7,6 +7,7 @@ class VerificationResult {
     public $verificationId;
     public $score;
     public $reason;
+    public $mode;
     public $origin;
     public $ipAddress;
     public $deviceFamily;
@@ -25,6 +26,7 @@ class VerificationResult {
         $this->verificationId = $data['verificationId'] ?? '';
         $this->score = $data['score'] ?? 0.0;
         $this->reason = $data['reason'] ?? '';
+        $this->mode = $data['mode'] ?? '';
         $this->origin = $data['origin'] ?? '';
         $this->ipAddress = $data['ipAddress'] ?? '';
         $this->deviceFamily = $data['deviceFamily'] ?? '';
