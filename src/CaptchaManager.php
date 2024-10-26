@@ -13,7 +13,7 @@ class CaptchaManager {
     public static function getVerificationResult(string $base64secretKey, string $base64verificationToken): VerificationResult {
         $verificationToken = self::getVerificationToken($base64verificationToken);
         $accessToken = AesEncryption::decryptToString($base64secretKey, $verificationToken->encryptedAccessToken);
-        $urlAsString = "{$verificationToken->apiEndpoint}/verifications/{$verificationToken->verificationId}/assessments?accessToken={$accessToken}";
+        $urlAsString = "{$verificationToken->apiEndpoint}/verifications/{$verificationToken->verificationId}/assessments?accessToken={$accessToken}&pl=php";
 
         $response = file_get_contents($urlAsString);
         if ($response === false) {
