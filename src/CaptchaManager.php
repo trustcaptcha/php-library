@@ -16,7 +16,7 @@ class CaptchaManager {
         $headers = [
             "tc-authorization: $secretKey",
             "tc-library-language: php",
-            "tc-library-version: 1.0"
+            "tc-library-version: 1.2"
         ];
 
         $options = [
